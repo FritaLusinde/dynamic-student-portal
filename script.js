@@ -40,34 +40,56 @@ if (registrationForm) {
         }
     });
 }
-// ================= LAB 8: Students list =================
+// ================= LAB 9: Objects, DOM and Fetch =================
 
-// 1. An array is a numbered shelf of names
-const students = ["Amina", "Brian", "Cynthia", "David", "Esther"];
-
-// 2. A function that adds ONE name to the page
-function addStudentToPage(name) {
+// 1. Add ONE student (now an object, not just a name) to the page
+function addStudentToPage(student) {
     const list = document.getElementById("student-list");
-    const item = document.createElement("li");   // make a new bullet
-    item.textContent = name;                     // write the name on it
-    list.appendChild(item);                      // stick it on the list
+    const item = document.createElement("li");
+    item.textContent = student.name + " - " + student.course + " (Year " + student.year + ")";
+    list.appendChild(item);
 }
 
-// 3. A function that adds ALL the names
+// 2. Show ALL students and update the counter heading
 function displayAllStudents(studentArray) {
     const list = document.getElementById("student-list");
-    list.innerHTML = "";   // wipe the list first so names never repeat
+    const heading = document.getElementById("student-heading");
+
+    list.innerHTML = "";   // wipe first so nothing repeats
 
     for (let i = 0; i < studentArray.length; i++) {
         addStudentToPage(studentArray[i]);
     }
+
+    heading.textContent = "Registered Students (" + studentArray.length + ")";
 }
 
-// 4. Wait for the button to be clicked
+// 3. Fetch the data from students.json
+async function loadStudents() {
+    const list = document.getElementById("student-list");
+
+    try {
+        const response = await fetch("students.json");
+
+        if (!response.ok) {
+            throw new Error("Could not load students (status " + response.status + ")");
+        }
+
+        const data = await response.json();
+        displayAllStudents(data);
+    } catch (error) {
+        console.error("Fetch failed:", error);
+        list.innerHTML = "";
+        const item = document.createElement("li");
+        item.textContent = "Sorry, the student list could not be loaded.";
+        item.style.color = "red";
+        list.appendChild(item);
+    }
+}
+
+// 4. Load when the button is clicked
 const showButton = document.getElementById("show-students-btn");
 
 if (showButton) {
-    showButton.addEventListener("click", function () {
-        displayAllStudents(students);
-    });
+    showButton.addEventListener("click", loadStudents);
 }
