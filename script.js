@@ -40,3 +40,34 @@ if (registrationForm) {
         }
     });
 }
+// ================= LAB 8: Students list =================
+
+// 1. An array is a numbered shelf of names
+const students = ["Amina", "Brian", "Cynthia", "David", "Esther"];
+
+// 2. A function that adds ONE name to the page
+function addStudentToPage(name) {
+    const list = document.getElementById("student-list");
+    const item = document.createElement("li");   // make a new bullet
+    item.textContent = name;                     // write the name on it
+    list.appendChild(item);                      // stick it on the list
+}
+
+// 3. A function that adds ALL the names
+function displayAllStudents(studentArray) {
+    const list = document.getElementById("student-list");
+    list.innerHTML = "";   // wipe the list first so names never repeat
+
+    for (let i = 0; i < studentArray.length; i++) {
+        addStudentToPage(studentArray[i]);
+    }
+}
+
+// 4. Wait for the button to be clicked
+const showButton = document.getElementById("show-students-btn");
+
+if (showButton) {
+    showButton.addEventListener("click", function () {
+        displayAllStudents(students);
+    });
+}
