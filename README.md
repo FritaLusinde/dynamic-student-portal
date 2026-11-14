@@ -36,6 +36,5 @@ A multi-page student portal website built using HTML, CSS and JavaScript as part
 
 ## Author
 **Name:** Frita Lusinde
-**Registration Number:** YOUR-REG-NUMBER
-**Course:** YOUR-COURSE
-**Lecturer:** YOUR-LECTURER
+**Registration Number:** BDSA/MK/4810/09/25
+**Unit Name:** Web Application Programming
