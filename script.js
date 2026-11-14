@@ -26,36 +26,67 @@ for (let i = 1; i <= 5; i++) {
     console.log("Count: " + i);
 }
 
-// ---------- Part 4: Check the registration form ----------
+// ---------- Part 4: Check the registration form with regex ----------
+
+// Pattern 1: name can only have letters and spaces
+const namePattern = /^[A-Za-z ]+$/;
+
+// Pattern 2: email must look like something@something.something
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 const registrationForm = document.querySelector("form");
 
 // This only runs on the page that HAS a form (register.html)
 if (registrationForm) {
     registrationForm.addEventListener("submit", function (event) {
         const nameValue = document.getElementById("fullname").value.trim();
+        const emailValue = document.getElementById("email").value.trim();
 
         if (nameValue === "") {
-            event.preventDefault();   // STOP the form from being sent
-            alert("Please enter your name before submitting.");
+            event.preventDefault();
+            alert("Error: Please enter your name.");
+        } else if (!namePattern.test(nameValue)) {
+            event.preventDefault();
+            alert("Error: Your name can only contain letters and spaces.");
+        } else if (!emailPattern.test(emailValue)) {
+            event.preventDefault();
+            alert("Error: Please enter a valid email, like name@example.com.");
+        } else {
+            alert("Success! Your registration looks good.");
         }
     });
 }
-// ================= LAB 9: Objects, DOM and Fetch =================
+// ================= LAB 10: Student class =================
 
-// 1. Add ONE student (now an object, not just a name) to the page
+// The cookie cutter
+class Student {
+    constructor(name, email, course, year) {
+        this.name = name;
+        this.email = email;
+        this.course = course;
+        this.year = year;
+    }
+
+    // A method is something every student can DO
+    getSummary() {
+        return this.name + " - " + this.course + " (Year " + this.year + ") - " + this.email;
+    }
+}
+
+// Add ONE student to the page
 function addStudentToPage(student) {
     const list = document.getElementById("student-list");
     const item = document.createElement("li");
-    item.textContent = student.name + " - " + student.course + " (Year " + student.year + ")";
+    item.textContent = student.getSummary();
     list.appendChild(item);
 }
 
-// 2. Show ALL students and update the counter heading
+// Show ALL students and update the counter heading
 function displayAllStudents(studentArray) {
     const list = document.getElementById("student-list");
     const heading = document.getElementById("student-heading");
 
-    list.innerHTML = "";   // wipe first so nothing repeats
+    list.innerHTML = "";
 
     for (let i = 0; i < studentArray.length; i++) {
         addStudentToPage(studentArray[i]);
@@ -64,7 +95,7 @@ function displayAllStudents(studentArray) {
     heading.textContent = "Registered Students (" + studentArray.length + ")";
 }
 
-// 3. Fetch the data from students.json
+// Fetch the data and stamp out Student objects
 async function loadStudents() {
     const list = document.getElementById("student-list");
 
@@ -76,7 +107,13 @@ async function loadStudents() {
         }
 
         const data = await response.json();
-        displayAllStudents(data);
+
+        // Turn each plain card into a real Student
+        const studentObjects = data.map(function (s) {
+            return new Student(s.name, s.email, s.course, s.year);
+        });
+
+        displayAllStudents(studentObjects);
     } catch (error) {
         console.error("Fetch failed:", error);
         list.innerHTML = "";
@@ -87,7 +124,7 @@ async function loadStudents() {
     }
 }
 
-// 4. Load when the button is clicked
+// Load when the button is clicked
 const showButton = document.getElementById("show-students-btn");
 
 if (showButton) {

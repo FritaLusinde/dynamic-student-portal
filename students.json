@@ -1,7 +1,7 @@
 [
-    { "name": "Amina Hassan", "course": "Computer Science", "year": 2 },
-    { "name": "Brian Otieno", "course": "Information Technology", "year": 1 },
-    { "name": "Cynthia Wanjiru", "course": "Software Engineering", "year": 3 },
-    { "name": "David Kimani", "course": "Computer Science", "year": 2 },
-    { "name": "Esther Achieng", "course": "Information Technology", "year": 4 }
+    { "name": "Amina Hassan", "email": "amina.hassan@student.ac.ke", "course": "Computer Science", "year": 2 },
+    { "name": "Brian Otieno", "email": "brian.otieno@student.ac.ke", "course": "Information Technology", "year": 1 },
+    { "name": "Cynthia Wanjiru", "email": "cynthia.wanjiru@student.ac.ke", "course": "Software Engineering", "year": 3 },
+    { "name": "David Kimani", "email": "david.kimani@student.ac.ke", "course": "Computer Science", "year": 2 },
+    { "name": "Esther Achieng", "email": "esther.achieng@student.ac.ke", "course": "Information Technology", "year": 4 }
 ]
